@@ -12,15 +12,32 @@ app.set('view engine', 'ejs');
 app.get('/random', (req, res, next) => {
   console.log('La request está llegando')
   pepe.getRandomJoke()
-    .then((response) => {
+    .then((responseRandomJoke) => {
       // console.log(response)
-      // res.send(response.value)
-      res.render('index', {response})
+      res.render('index', {
+        joke: responseRandomJoke})
     }).catch((err) => {
       // console.log(err)
-      console.log('Esto esta dando error')
+      console.log('Error en la 1 iteration')
     });
 });
+
+//Second iteration
+app.get('/categories', (req, res, next) => {
+  console.log('La request 2 está llegando')
+  pepe.getJokeCategories()
+  .then((responseJokeCategorie)=>  {
+    // use the response here
+    res.render('categories', {
+      categories: responseJokeCategorie
+    })
+  })
+  .catch((err)=> {
+    // handle error
+    console.log('Error en la 2 iteration')
+  });
+});
+
 
 // Server Started
 app.listen(3000, () => {
